@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.io.FileReader;
 import java.util.List;
 import java.util.Scanner;
 
@@ -339,39 +340,228 @@ class Giay_chay_bo extends Giay{
     }
 }
 
-class DSG {
-    
-    private List<Giay> list; // danh sách giày ----------- Nếu mọi người chưa biết List thì có thể sử dụng mảng thường (Giay[] list) nhưng mà dài hơn kha khá
+// Lớp Giay là lớp trừu tượng
+abstract class Giay {
+    private String maGiay;
+    private String tenGiay;
+    private int size;
 
     // Hàm thiết lập (Constructor)
-    public DSG() {
-        list = new ArrayList<>();
+    public Giay() {
+        maGiay = "";
+        tenGiay = "";
+        size = 0;
     }
-  
-    // phần tiếp theo
 
+    public Giay(String maGiay, String tenGiay, int size) {
+        this.maGiay = maGiay;
+        this.tenGiay = tenGiay;
+        this.size = size;
+    }
+
+    // Phương thức getter và setter
+    public String getMaGiay() {
+        return maGiay;
+    }
+
+    public void setMaGiay(String maGiay) {
+        this.maGiay = maGiay;
+    }
+
+    public String getTenGiay() {
+        return tenGiay;
+    }
+
+    public void setTenGiay(String tenGiay) {
+        this.tenGiay = tenGiay;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    // Hàm xuất thông tin giày (abstract để lớp con định nghĩa)
+    public void xuat() {
+        System.out.println("Ma giay: " + getMaGiay());
+        System.out.println("Ten giay: " + getTenGiay());
+        System.out.println("Size: " + getSize());
+    }
 }
 
+// Lớp Giay_da_bong kế thừa Giay
+class Giay_da_bong extends Giay {
+    private String loaiDe;
+    private int soLuong;
+    private double giaBan;
 
+    // Hàm thiết lập (Constructor)
+    public Giay_da_bong() {
+        super();
+        loaiDe = "";
+        soLuong = 0;
+        giaBan = 0.0;
+    }
 
+    public Giay_da_bong(String maGiay, String tenGiay, int size, String loaiDe, int soLuong, double giaBan) {
+        super(maGiay, tenGiay, size);
+        this.loaiDe = loaiDe;
+        this.soLuong = soLuong;
+        this.giaBan = giaBan;
+    }
 
+    // Phương thức getter và setter
+    public String getLoaiDe() {
+        return loaiDe;
+    }
 
+    public void setLoaiDe(String loaiDe) {
+        this.loaiDe = loaiDe;
+    }
 
+    public int getSoLuong() {
+        return soLuong;
+    }
 
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
 
+    public double getGiaBan() {
+        return giaBan;
+    }
 
+    public void setGiaBan(double giaBan) {
+        this.giaBan = giaBan;
+    }
 
+    @Override
+    public void xuat() {
+        super.xuat();  // gọi phương thức xuat() từ lớp cha
+        System.out.println("Loai de: " + loaiDe);
+        System.out.println("So luong: " + soLuong);
+        System.out.println("Gia ban: " + giaBan);
+    }
+}
 
+// Lớp Giay_cau_long kế thừa Giay
+class Giay_cau_long extends Giay {
+    private int doBam;
+    private int soLuong;
+    private double giaBan;
 
+    // Hàm thiết lập (Constructor)
+    public Giay_cau_long() {
+        super();
+        doBam = 0;
+        soLuong = 0;
+        giaBan = 0.0;
+    }
 
+    public Giay_cau_long(String maGiay, String tenGiay, int size, int doBam, int soLuong, double giaBan) {
+        super(maGiay, tenGiay, size);
+        this.doBam = doBam;
+        this.soLuong = soLuong;
+        this.giaBan = giaBan;
+    }
 
+    // Phương thức getter và setter
+    public int getDoBam() {
+        return doBam;
+    }
 
+    public void setDoBam(int doBam) {
+        this.doBam = doBam;
+    }
 
+    public int getSoLuong() {
+        return soLuong;
+    }
 
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
 
+    public double getGiaBan() {
+        return giaBan;
+    }
 
+    public void setGiaBan(double giaBan) {
+        this.giaBan = giaBan;
+    }
 
+    @Override
+    public void xuat() {
+        super.xuat();  // gọi phương thức xuat() từ lớp cha
+        System.out.println("Do bam: " + doBam);
+        System.out.println("So luong: " + soLuong);
+        System.out.println("Gia ban: " + giaBan);
+    }
+}
 
+// Lớp Giay_chay_bo kế thừa Giay
+class Giay_chay_bo extends Giay {
+    private int doEm;
+    private int soLuong;
+    private double giaBan;
+
+    // Hàm thiết lập (Constructor)
+    public Giay_chay_bo() {
+        super();
+        doEm = 0;
+        soLuong = 0;
+        giaBan = 0.0;
+    }
+
+    public Giay_chay_bo(String maGiay, String tenGiay, int size, int doEm, int soLuong, double giaBan) {
+        super(maGiay, tenGiay, size);
+        this.doEm = doEm;
+        this.soLuong = soLuong;
+        this.giaBan = giaBan;
+    }
+
+    // Phương thức getter và setter
+    public int getDoEm() {
+        return doEm;
+    }
+
+    public void setDoEm(int doEm) {
+        this.doEm = doEm;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public double getGiaBan() {
+        return giaBan;
+    }
+
+    public void setGiaBan(double giaBan) {
+        this.giaBan = giaBan;
+    }
+
+    @Override
+    public void xuat() {
+        super.xuat();  // gọi phương thức xuat() từ lớp cha
+        System.out.println("Do em: " + doEm);
+        System.out.println("So luong: " + soLuong);
+        System.out.println("Gia ban: " + giaBan);
+    }
+}
+
+// Lớp DSG để quản lý danh sách giày
+public class DSG {
+    private List<Giay> list; // Danh sách giày
+
+    
 
 
 
