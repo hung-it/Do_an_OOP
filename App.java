@@ -432,27 +432,6 @@ class Giay_chay_bo extends Giay {
 }
 
  
-    // Main class để kiểm tra
-public class Main {
-    public static void main(String[] args) {
-        DSG danhSach = new DSG();
-
-        // Thêm giày
-        danhSach.themGiay(new Giay_da_bong("D001", "Giay da bong Nike", 42, "Cao su", 10, 1200.5));
-        danhSach.themGiay(new Giay_cau_long("C001", "Giay cau long Yonex", 40, 8, 15, 1500.0));
-        danhSach.themGiay(new Giay_chay_bo("R001", "Giay chay bo Adidas", 41, 5, 20, 1800.0));
-
-        // Hiển thị danh sách
-        danhSach.hienThi();
-
-        // Ghi file
-        danhSach.ghiFile("giay.txt");
-
-        // Đọc file và hiển thị lại
-        danhSach.docFile("giay.txt");
-        System.out.println("Danh sach sau khi doc file:");
-        danhSach.hienThi();
-    }
-}
+   
     // phần tiếp theo
 
