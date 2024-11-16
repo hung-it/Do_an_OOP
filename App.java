@@ -298,15 +298,161 @@ class Giay_chay_bo extends Giay{
     }
 }
 
-class DSG {
+interface QuanLyGiay {
+    void themGiay(Giay giay);
+    void xoaGiay(String maGiay);
+    void hienThi();
+}
 
-    private List<Giay> list; // danh sách giày ----------- Nếu mọi người chưa biết List thì có thể sử dụng mảng thường (Giay[] list) nhưng mà dài hơn kha khá
+// Lớp danh sách các đối tượng (mảng các đối tượng)
+class DSG implements QuanLyGiay {
+
+    private List<Giay> list;
+    private static int tongSoGiay = 0; // thuộc tính static để đếm tổng số giày
 
     // Hàm thiết lập (Constructor)
     public DSG() {
-        list = new ArrayList<>();
+        this.list = new ArrayList<>();
     }
 
+    public static int getTongSoGiay() {
+        return tongSoGiay;
+    }
+
+    // Thêm giày vào danh sách
+    @Override
+    public void themGiay(Giay giay) {
+        list.add(giay);
+        tongSoGiay++;
+    }
+
+    // Xóa giày khỏi danh sách
+    @Override
+    public void xoaGiay(String maGiay) {
+        list.removeIf(giay -> giay.getMaGiay().equals(maGiay));
+        tongSoGiay--;
+    }
+
+    // Hiển thị danh sách giày
+    @Override
+    public void hienThi() {
+        for (Giay giay : list) {
+            if (giay instanceof Giay_da_bong) {
+                System.out.println("Giay da bong:");
+            } else if (giay instanceof Giay_cau_long) {
+                System.out.println("Giay cau long:");
+            } else if (giay instanceof Giay_chay_bo) {
+                System.out.println("Giay chay bo:");
+            }
+            giay.xuat(null); // Gọi phương thức xuất của từng lớp
+        }
+    }
+
+    // Ghi danh sách vào file
+    public void ghiFile(String tenFile) {
+        try (FileWriter fw = new FileWriter(tenFile)) {
+            for (Giay giay : list) {
+                fw.write(giay.toString() + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Đọc danh sách giày từ file
+    public void docFile(String tenFile) {
+        try (BufferedReader br = new BufferedReader(new FileReader(tenFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] arr = line.split(",");
+                Giay giay;
+                if (arr[0].startsWith("D")) { // mã giày bắt đầu bằng "D" là giày đá bóng
+                    giay = new Giay_da_bong();
+                } else if (arr[0].startsWith("C")) { // mã giày bắt đầu bằng "C" là giày cầu lông
+                    giay = new Giay_cau_long();
+                } else { // mặc định là giày chạy bộ
+                    giay = new Giay_chay_bo();
+                }
+                giay.nhap(arr); // Giả sử phương thức `nhap` nhận mảng chuỗi làm tham số
+                list.add(giay);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+// Lớp trừu tượng Giay và các lớp con (cần định nghĩa riêng)
+abstract class Giay {
+    protected String maGiay;
+
+    public String getMaGiay() {
+        return maGiay;
+    }
+
+    public abstract void xuat(String data);
+
+    public abstract void nhap(String[] data);
+}
+
+class Giay_da_bong extends Giay {
+    @Override
+    public void xuat(String data) {
+        System.out.println("Giay da bong: " + maGiay);
+    }
+
+    @Override
+    public void nhap(String[] data) {
+        this.maGiay = data[0];
+    }
+}
+
+class Giay_cau_long extends Giay {
+    @Override
+    public void xuat(String data) {
+        System.out.println("Giay cau long: " + maGiay);
+    }
+
+    @Override
+    public void nhap(String[] data) {
+        this.maGiay = data[0];
+    }
+}
+
+class Giay_chay_bo extends Giay {
+    @Override
+    public void xuat(String data) {
+        System.out.println("Giay chay bo: " + maGiay);
+    }
+
+    @Override
+    public void nhap(String[] data) {
+        this.maGiay = data[0];
+    }
+}
+
+ 
+    // Main class để kiểm tra
+public class Main {
+    public static void main(String[] args) {
+        DSG danhSach = new DSG();
+
+        // Thêm giày
+        danhSach.themGiay(new Giay_da_bong("D001", "Giay da bong Nike", 42, "Cao su", 10, 1200.5));
+        danhSach.themGiay(new Giay_cau_long("C001", "Giay cau long Yonex", 40, 8, 15, 1500.0));
+        danhSach.themGiay(new Giay_chay_bo("R001", "Giay chay bo Adidas", 41, 5, 20, 1800.0));
+
+        // Hiển thị danh sách
+        danhSach.hienThi();
+
+        // Ghi file
+        danhSach.ghiFile("giay.txt");
+
+        // Đọc file và hiển thị lại
+        danhSach.docFile("giay.txt");
+        System.out.println("Danh sach sau khi doc file:");
+        danhSach.hienThi();
+    }
+}
     // phần tiếp theo
 
-}
