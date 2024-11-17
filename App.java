@@ -3,6 +3,8 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.io.FileReader;
+import java.io.IOException;
   
 // lớp cha
 abstract class Giay{
@@ -74,6 +76,13 @@ abstract class Giay{
         }
         
     }
+
+    // thêm một phương thức để nhập các giá trị từ mảng chuỗi
+    public void nhapFromArray(String[] arr) {
+        maGiay = arr[0];
+        tenGiay = arr[1];
+        size = Integer.parseInt(arr[2]);
+      }
 }
 // Lớp con 
 class Giay_da_bong extends Giay{
@@ -359,7 +368,8 @@ class DSG implements QuanLyGiay {
         }
     }
 
-    // Đọc danh sách giày từ file
+
+    // đọc file 
     public void docFile(String tenFile) {
         try (BufferedReader br = new BufferedReader(new FileReader(tenFile))) {
             String line;
@@ -373,62 +383,13 @@ class DSG implements QuanLyGiay {
                 } else { // mặc định là giày chạy bộ
                     giay = new Giay_chay_bo();
                 }
-                giay.nhap(arr); // Giả sử phương thức `nhap` nhận mảng chuỗi làm tham số
+                giay.nhapFromArray(arr); // Gọi phương thức mới để thiết lập giá trị từ mảng
                 list.add(giay);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-}
-
-// Lớp trừu tượng Giay và các lớp con (cần định nghĩa riêng)
-abstract class Giay {
-    protected String maGiay;
-
-    public String getMaGiay() {
-        return maGiay;
-    }
-
-    public abstract void xuat(String data);
-
-    public abstract void nhap(String[] data);
-}
-
-class Giay_da_bong extends Giay {
-    @Override
-    public void xuat(String data) {
-        System.out.println("Giay da bong: " + maGiay);
-    }
-
-    @Override
-    public void nhap(String[] data) {
-        this.maGiay = data[0];
-    }
-}
-
-class Giay_cau_long extends Giay {
-    @Override
-    public void xuat(String data) {
-        System.out.println("Giay cau long: " + maGiay);
-    }
-
-    @Override
-    public void nhap(String[] data) {
-        this.maGiay = data[0];
-    }
-}
-
-class Giay_chay_bo extends Giay {
-    @Override
-    public void xuat(String data) {
-        System.out.println("Giay chay bo: " + maGiay);
-    }
-
-    @Override
-    public void nhap(String[] data) {
-        this.maGiay = data[0];
-    }
+     } 
 }
 
  
