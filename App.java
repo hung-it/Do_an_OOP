@@ -3,45 +3,68 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-  
+
+// Interface
+interface GiayInterface {
+    void nhap(FileWriter fw);
+    void xuat(BufferedReader br);
+}
+
 // lớp cha
-abstract class Giay{
-    
+abstract class Giay implements GiayInterface {
     private String maGiay;
     private String tenGiay;
     private int size;
-    // Hàm thiết lập (Constructor) 
+    // Thuộc tính static
+    private static int soLuongGiay = 0;
+
+    // Hàm thiết lập (Constructor)
     public Giay() {
         maGiay = "";
         tenGiay = "";
         size = 0;
+        soLuongGiay++;
     }
+
     public Giay(String maGiay, String tenGiay, int size) {
         this.maGiay = maGiay;
         this.tenGiay = tenGiay;
         this.size = size;
+        soLuongGiay++;
     }
-    // Phương thức getter và setter 
+
+    // Phương thức getter và setter
     public String getMaGiay() {
         return maGiay;
     }
+
     public void setMaGiay(String maGiay) {
         this.maGiay = maGiay;
     }
+
     public String getTenGiay() {
         return tenGiay;
     }
+
     public void setTenGiay(String tenGiay) {
         this.tenGiay = tenGiay;
     }
+
     public int getSize() {
         return size;
     }
+
     public void setSize(int size) {
         this.size = size;
     }
-    // Hàm nhập vào file 
-    public void nhap(FileWriter fw){
+
+    // Phương thức static
+    public static int getSoLuongGiay() {
+        return soLuongGiay;
+    }
+
+    // Hàm nhập vào file
+    public void nhap(FileWriter fw) {
         Scanner scanner = new Scanner(System.in);
         try {
             System.out.print("Nhap ma giay: ");
@@ -56,10 +79,10 @@ abstract class Giay{
         } catch (Exception e) {
             e.printStackTrace();
         }
-       
     }
-    // Hàm xuất từ file 
-    public void xuat(BufferedReader br){
+
+    // Hàm xuất từ file
+    public void xuat(BufferedReader br) {
         try {
             String line = br.readLine();
             String[] arr = line.split(",");
@@ -72,50 +95,58 @@ abstract class Giay{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
     }
 }
-// Lớp con 
-class Giay_da_bong extends Giay{
-    
+
+// Lớp con
+class Giay_da_bong extends Giay {
     private String loaiDe;
     private int soLuong;
     private double giaBan;
-    // Hàm thiết lập mặc định (Constructor) 
+
+    // Hàm thiết lập mặc định (Constructor)
     public Giay_da_bong() {
         super();
         loaiDe = "";
         soLuong = 0;
         giaBan = 0;
     }
+
     public Giay_da_bong(String maGiay, String tenGiay, int size, String loaiDe, int soLuong, double giaBan) {
         super(maGiay, tenGiay, size);
         this.loaiDe = loaiDe;
         this.soLuong = soLuong;
         this.giaBan = giaBan;
     }
+
     // Phương thức getter và setter
-    public String getLoaiDe(){
+    public String getLoaiDe() {
         return loaiDe;
     }
-    public void setLoaiDe(String loaiDe){
+
+    public void setLoaiDe(String loaiDe) {
         this.loaiDe = loaiDe;
     }
-    public int getSoLuong(){
+
+    public int getSoLuong() {
         return soLuong;
     }
-    public void setSoLuong(int soLuong){
+
+    public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
-    public double getGiaBan(){
+
+    public double getGiaBan() {
         return giaBan;
     }
-    public void setGiaBan(double giaBan){
+
+    public void setGiaBan(double giaBan) {
         this.giaBan = giaBan;
     }
+
     // Hàm nhập vào file
     @Override
-    public void nhap(FileWriter fw){
+    public void nhap(FileWriter fw) {
         super.nhap(fw);
         Scanner scanner = new Scanner(System.in);
         try {
@@ -132,9 +163,10 @@ class Giay_da_bong extends Giay{
             e.printStackTrace();
         }
     }
+
     // Hàm xuất từ file
     @Override
-    public void xuat(BufferedReader br){
+    public void xuat(BufferedReader br) {
         super.xuat(br);
         try {
             String line = br.readLine();
@@ -150,11 +182,12 @@ class Giay_da_bong extends Giay{
         }
     }
 }
-class Giay_cau_long extends Giay{
-    
+
+class Giay_cau_long extends Giay {
     private int doBam;
     private int soLuong;
     private double giaBan;
+
     // Hàm thiết lập (Constructor)
     public Giay_cau_long() {
         super();
@@ -162,33 +195,41 @@ class Giay_cau_long extends Giay{
         soLuong = 0;
         giaBan = 0;
     }
+
     public Giay_cau_long(String maGiay, String tenGiay, int size, int doBam, int soLuong, double giaBan) {
         super(maGiay, tenGiay, size);
         this.doBam = doBam;
         this.soLuong = soLuong;
         this.giaBan = giaBan;
     }
+
     // Phương thức getter và setter
-    public int getDoBam(){
+    public int getDoBam() {
         return doBam;
     }
-    public void setDoBam(int doBam){
+
+    public void setDoBam(int doBam) {
         this.doBam = doBam;
     }
-    public int getSoLuong(){
+
+    public int getSoLuong() {
         return soLuong;
     }
-    public void setSoLuong(int soLuong){
+
+    public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
-    public double getGiaBan(){
+
+    public double getGiaBan() {
         return giaBan;
     }
-    public void setGiaBan(double giaBan){
+
+    public void setGiaBan(double giaBan) {
         this.giaBan = giaBan;
     }
+
     @Override
-    public void nhap(FileWriter fw){
+    public void nhap(FileWriter fw) {
         super.nhap(fw);
         Scanner scanner = new Scanner(System.in);
         try {
@@ -205,8 +246,9 @@ class Giay_cau_long extends Giay{
             e.printStackTrace();
         }
     }
+
     @Override
-    public void xuat(BufferedReader br){
+    public void xuat(BufferedReader br) {
         super.xuat(br);
         try {
             String line = br.readLine();
@@ -222,11 +264,12 @@ class Giay_cau_long extends Giay{
         }
     }
 }
-class Giay_chay_bo extends Giay{
-    
+
+class Giay_chay_bo extends Giay {
     private int doEm;
     private int soLuong;
     private double giaBan;
+
     // Hàm thiết lập (Constructor)
     public Giay_chay_bo() {
         super();
@@ -234,35 +277,42 @@ class Giay_chay_bo extends Giay{
         soLuong = 0;
         giaBan = 0;
     }
-    
+
     public Giay_chay_bo(String maGiay, String tenGiay, int size, int doEm, int soLuong, double giaBan) {
         super(maGiay, tenGiay, size);
         this.doEm = doEm;
         this.soLuong = soLuong;
         this.giaBan = giaBan;
     }
+
     // Phương thức getter và setter
-    public int getDoEm(){
+    public int getDoEm() {
         return doEm;
     }
-    public void setDoEm(int doEm){
+
+    public void setDoEm(int doEm) {
         this.doEm = doEm;
     }
-    public int getSoLuong(){
+
+    public int getSoLuong() {
         return soLuong;
     }
-    public void setSoLuong(int soLuong){
+
+    public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
-    public double getGiaBan(){
+
+    public double getGiaBan() {
         return giaBan;
     }
-    public void setGiaBan(double giaBan){
+
+    public void setGiaBan(double giaBan) {
         this.giaBan = giaBan;
     }
+
     // Hàm nhập vào file
     @Override
-    public void nhap(FileWriter fw){
+    public void nhap(FileWriter fw) {
         super.nhap(fw);
         Scanner scanner = new Scanner(System.in);
         try {
@@ -279,9 +329,10 @@ class Giay_chay_bo extends Giay{
             e.printStackTrace();
         }
     }
+
     // Hàm xuất từ file
     @Override
-    public void xuat(BufferedReader br){
+    public void xuat(BufferedReader br) {
         super.xuat(br);
         try {
             String line = br.readLine();
@@ -299,14 +350,22 @@ class Giay_chay_bo extends Giay{
 }
 
 class DSG {
-
-    private List<Giay> list; // danh sách giày ----------- Nếu mọi người chưa biết List thì có thể sử dụng mảng thường (Giay[] list) nhưng mà dài hơn kha khá
+    private List<Giay> list; // danh sách giày
 
     // Hàm thiết lập (Constructor)
     public DSG() {
         list = new ArrayList<>();
     }
 
-    // phần tiếp theo
+    public DSG(List<Giay> list) {
+        this.list = list;
+    }
 
-}
+    // Thêm giày vào danh sách
+    public void themGiay(Giay giay) {
+        list.add(giay);
+    }
+
+    // tiếp tục
+
+    }
