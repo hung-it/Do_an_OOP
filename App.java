@@ -362,7 +362,7 @@ class DSG {
     }
 
     // Thêm giày vào danh sách
-    public void themGiay(Giay giay) {
+    public void ThemGiay(Giay giay) {
         list.add(giay);
     }
     // Xem danh sách
