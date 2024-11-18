@@ -365,7 +365,48 @@ class DSG {
     public void themGiay(Giay giay) {
         list.add(giay);
     }
-
+    // Xem danh sách
+     public void XemDanhSach() {
+        for (Giay giay : list) {
+            System.out.print("Ma giay: " + giay.getMaGiay() + ", Ten giay: " + giay.getTenGiay() + ", Size: " + giay.getSize());
+            if (giay instanceof Giay_da_bong) {
+                Giay_da_bong gdb = (Giay_da_bong) giay;
+                System.out.print(", Loai de: " + gdb.getLoaiDe() + ", So luong: " + gdb.getSoLuong() + ", Gia ban: " + gdb.getGiaBan());
+            } else if (giay instanceof Giay_cau_long) {
+                Giay_cau_long gcl = (Giay_cau_long) giay;
+                System.out.print(", Do bam: " + gcl.getDoBam() + ", So luong: " + gcl.getSoLuong() + ", Gia ban: " + gcl.getGiaBan());
+            } else if (giay instanceof Giay_chay_bo) {
+                Giay_chay_bo gcb = (Giay_chay_bo) giay;
+                System.out.print(", Do em: " + gcb.getDoEm() + ", So luong: " + gcb.getSoLuong() + ", Gia ban: " + gcb.getGiaBan());
+            }
+            System.out.println();
+        }
+    
+    }
+    //Tìm kiếm theo mã giày
+    public Giay TimKiemTheoMa(String maGiay) {
+        for (Giay giay : list) {
+            if (giay.getMaGiay().equals(maGiay)) {
+                return giay;
+            }
+        }
+        return null;
+    }
+    //Sửa giày theo mã giày
+    public boolean SuaGiay(String maGiay, Giay giayMoi) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getMaGiay().equals(maGiay)) {
+                list.set(i, giayMoi);
+                return true;
+            }
+        }
+        return false;
+    }
+    //Xóa giày theo mã giày
+    public boolean XoaGiay(String maGiay) {
+        return list.removeIf(giay -> giay.getMaGiay().equals(maGiay));
+    }
+}
     // tiếp tục
 
     }
