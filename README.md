@@ -1,3 +1,3 @@
 
-Mấy cái chức năng làm trong phần DSG nha thầy.
+tao làm xong hết rồi, test lại coi có nào bug k
 
