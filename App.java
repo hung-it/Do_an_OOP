@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.text.GapContent;
 
 // Interface
 interface GiayInterface {
@@ -71,7 +72,7 @@ abstract class Giay implements GiayInterface {
         try {
             System.out.print("Nhap ma giay: ");
             maGiay = scanner.nextLine();
-            fw.write(maGiay + ",");
+            fw.write(maGiay + ", ");
             System.out.print("Nhap ten giay: ");
             tenGiay = scanner.nextLine();
             fw.write(tenGiay + ", ");
@@ -104,7 +105,7 @@ abstract class Giay implements GiayInterface {
 class Giay_da_bong extends Giay {
     private String loaiDe;
     private int soLuong;
-    private double giaBan;
+    private int giaBan;
 
     // Hàm thiết lập mặc định (Constructor)
     public Giay_da_bong() {
@@ -114,7 +115,7 @@ class Giay_da_bong extends Giay {
         giaBan = 0;
     }
 
-    public Giay_da_bong(String maGiay, String tenGiay, int size, String loaiDe, int soLuong, double giaBan) {
+    public Giay_da_bong(String maGiay, String tenGiay, int size, String loaiDe, int soLuong, int giaBan) {
         super(maGiay, tenGiay, size);
         this.loaiDe = loaiDe;
         this.soLuong = soLuong;
@@ -142,7 +143,7 @@ class Giay_da_bong extends Giay {
         return giaBan;
     }
 
-    public void setGiaBan(double giaBan) {
+    public void setGiaBan(int giaBan) {
         this.giaBan = giaBan;
     }
 
@@ -159,7 +160,7 @@ class Giay_da_bong extends Giay {
             soLuong = scanner.nextInt();
             fw.write(soLuong + ", ");
             System.out.print("Nhap gia ban: ");
-            giaBan = scanner.nextDouble();
+            giaBan = scanner.nextInt();
             fw.write(giaBan + "\n");
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,7 +176,7 @@ class Giay_da_bong extends Giay {
             String[] arr = line.split(",");
             loaiDe = arr[3];
             soLuong = Integer.parseInt(arr[4]);
-            giaBan = Double.parseDouble(arr[5]);
+            giaBan = Integer.parseInt(arr[5]);
             System.out.println("Loai de: " + loaiDe);
             System.out.println("So luong: " + soLuong);
             System.out.println("Gia ban: " + giaBan);
@@ -188,7 +189,7 @@ class Giay_da_bong extends Giay {
 class Giay_cau_long extends Giay {
     private int doBam;
     private int soLuong;
-    private double giaBan;
+    private int giaBan;
 
     // Hàm thiết lập (Constructor)
     public Giay_cau_long() {
@@ -198,7 +199,7 @@ class Giay_cau_long extends Giay {
         giaBan = 0;
     }
 
-    public Giay_cau_long(String maGiay, String tenGiay, int size, int doBam, int soLuong, double giaBan) {
+    public Giay_cau_long(String maGiay, String tenGiay, int size, int doBam, int soLuong, int giaBan) {
         super(maGiay, tenGiay, size);
         this.doBam = doBam;
         this.soLuong = soLuong;
@@ -226,7 +227,7 @@ class Giay_cau_long extends Giay {
         return giaBan;
     }
 
-    public void setGiaBan(double giaBan) {
+    public void setGiaBan(int giaBan) {
         this.giaBan = giaBan;
     }
 
@@ -242,7 +243,7 @@ class Giay_cau_long extends Giay {
             soLuong = scanner.nextInt();
             fw.write(soLuong + ", ");
             System.out.print("Nhap gia ban: ");
-            giaBan = scanner.nextDouble();
+            giaBan = scanner.nextInt();
             fw.write(giaBan + "\n");
         } catch (Exception e) {
             e.printStackTrace();
@@ -257,7 +258,7 @@ class Giay_cau_long extends Giay {
             String[] arr = line.split(",");
             doBam = Integer.parseInt(arr[3]);
             soLuong = Integer.parseInt(arr[4]);
-            giaBan = Double.parseDouble(arr[5]);
+            giaBan = Integer.parseInt(arr[5]);
             System.out.println("Do bam: " + doBam);
             System.out.println("So luong: " + soLuong);
             System.out.println("Gia ban: " + giaBan);
@@ -270,7 +271,7 @@ class Giay_cau_long extends Giay {
 class Giay_chay_bo extends Giay {
     private int doEm;
     private int soLuong;
-    private double giaBan;
+    private int giaBan;
 
     // Hàm thiết lập (Constructor)
     public Giay_chay_bo() {
@@ -280,7 +281,7 @@ class Giay_chay_bo extends Giay {
         giaBan = 0;
     }
 
-    public Giay_chay_bo(String maGiay, String tenGiay, int size, int doEm, int soLuong, double giaBan) {
+    public Giay_chay_bo(String maGiay, String tenGiay, int size, int doEm, int soLuong, int giaBan) {
         super(maGiay, tenGiay, size);
         this.doEm = doEm;
         this.soLuong = soLuong;
@@ -308,7 +309,7 @@ class Giay_chay_bo extends Giay {
         return giaBan;
     }
 
-    public void setGiaBan(double giaBan) {
+    public void setGiaBan(int giaBan) {
         this.giaBan = giaBan;
     }
 
@@ -325,7 +326,7 @@ class Giay_chay_bo extends Giay {
             soLuong = scanner.nextInt();
             fw.write(soLuong + ", ");
             System.out.print("Nhap gia ban: ");
-            giaBan = scanner.nextDouble();
+            giaBan = scanner.nextInt();
             fw.write(giaBan + "\n");
         } catch (Exception e) {
             e.printStackTrace();
@@ -341,7 +342,7 @@ class Giay_chay_bo extends Giay {
             String[] arr = line.split(",");
             doEm = Integer.parseInt(arr[3]);
             soLuong = Integer.parseInt(arr[4]);
-            giaBan = Double.parseDouble(arr[5]);
+            giaBan = Integer.parseInt(arr[5]);
             System.out.println("Do em: " + doEm);
             System.out.println("So luong: " + soLuong);
             System.out.println("Gia ban: " + giaBan);
@@ -412,7 +413,7 @@ class DSG {
                     System.err.println("Nhap so luong: ");
                     ((Giay_da_bong) giay).setSoLuong(scanner.nextInt());
                     System.err.println("Nhap gia ban: ");
-                    ((Giay_da_bong) giay).setGiaBan(scanner.nextDouble());
+                    ((Giay_da_bong) giay).setGiaBan(scanner.nextInt());
                 } else if (giay instanceof Giay_cau_long) {
                     giay.nhap(fw);
                     System.err.println("Nhap do bam: ");
@@ -420,7 +421,7 @@ class DSG {
                     System.err.println("Nhap so luong: ");
                     ((Giay_cau_long) giay).setSoLuong(scanner.nextInt());
                     System.err.println("Nhap gia ban: ");
-                    ((Giay_cau_long) giay).setGiaBan(scanner.nextDouble());
+                    ((Giay_cau_long) giay).setGiaBan(scanner.nextInt());
                 } else if (giay instanceof Giay_chay_bo) {
                     giay.nhap(fw);
                     System.err.println("Nhap do em: ");
@@ -428,7 +429,7 @@ class DSG {
                     System.err.println("Nhap so luong: ");
                     ((Giay_chay_bo) giay).setSoLuong(scanner.nextInt());
                     System.err.println("Nhap gia ban: ");
-                    ((Giay_chay_bo) giay).setGiaBan(scanner.nextDouble());
+                    ((Giay_chay_bo) giay).setGiaBan(scanner.nextInt());
                 }
                 return;
             }
@@ -481,7 +482,7 @@ class DSG {
         }
 
         list.removeIf(giay -> giay.getMaGiay().equals(maGiay));
-
+    
 }
 
     // Tìm kiếm giày theo mã
@@ -966,14 +967,14 @@ class DSHD{
 }
 
 // Lớp chính
-public class App{
+public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         DSG dsg = new DSG();
         DSU dsu = new DSU();
         DSHD dshd = new DSHD();
 
-        while (true){
+        while (true) {
             System.err.println("---------------------------------------------------");
             System.err.println("Lua chon chuc nang o muc: ");
             System.err.println("1. Giay");
@@ -984,213 +985,231 @@ public class App{
             System.err.print("Nhap lua chon cua ban: ");
             int choice = Integer.parseInt(scanner.nextLine());
             System.err.println("---------------------------------------------------");
-
-            switch (choice){ 
+            switch (choice) {
                 case 1:
-                        System.err.println("---------------------------------------------------");
-                        System.err.println("1. Them giay");
-                        System.err.println("2. Sua giay theo ma");
-                        System.err.println("3. Xoa giay theo ma");
-                        System.err.println("4. Tim kiem theo ma");
-                        System.err.println("5. Hien thi danh sach giay");
-                        System.err.println("6. Xem tong so luong giay");
-                        System.err.println("7. Quay lai");
-                        System.err.println("---------------------------------------------------");
-                        System.err.print("Nhap lua chon cua ban: ");
-                        int choice1 = Integer.parseInt(scanner.nextLine());
-                        System.err.println("---------------------------------------------------");  
-                        switch (choice1){
-                            case 1:
-                                System.err.println("---------------------------------------------------");
-                                System.err.println("Chon loai giay can them:");
-                                System.err.println("1. Giay da bong");
-                                System.err.println("2. Giay cau long");
-                                System.err.println("3. Giay chay bo");
-                                System.err.println("4. Quay lai");
-                                System.err.println("---------------------------------------------------");
-                                System.err.print("Nhap lua chon cua ban: ");
-                                int loai = Integer.parseInt(scanner.nextLine());
-                                System.err.println("---------------------------------------------------");
-                                Giay giay = null;
-                                switch (loai){
-                                    case 1:
-                                    giay = new Giay_da_bong( "", "", 0, "", 0, 0);
-                                    if (giay != null){
-                                       dsg.themGiay(giay, "Football.txt");
-                                    }    
-                                break;
-                                    case 2:
-                                     giay = new Giay_cau_long("", "", 0, 0, 0, 0);
-                                     if (giay != null){
-                                        dsg.themGiay(giay,"Badminton.txt");
-                                        }
+                boolean flag = false;
+                while (!flag){
+                    System.err.println("---------------------------------------------------");
+                    System.err.println("1. Them giay");
+                    System.err.println("2. Sua giay theo ma");
+                    System.err.println("3. Xoa giay theo ma");
+                    System.err.println("4. Tim kiem theo ma");
+                    System.err.println("5. Hien thi danh sach giay");
+                    System.err.println("6. Xem tong so luong giay");
+                    System.err.println("7. Quay lai");
+                    System.err.println("---------------------------------------------------");
+                    System.err.print("Nhap lua chon cua ban: ");
+                    int choice1 = Integer.parseInt(scanner.nextLine());
+                    System.err.println("---------------------------------------------------");
+                    switch (choice1) {
+                        case 1:
+                            System.err.println("---------------------------------------------------");
+                            System.err.println("Chon loai giay can them:");
+                            System.err.println("1. Giay da bong");
+                            System.err.println("2. Giay cau long");
+                            System.err.println("3. Giay chay bo");
+                            System.err.println("4. Quay lai");
+                            System.err.println("---------------------------------------------------");
+                            System.err.print("Nhap lua chon cua ban: ");
+                            int loai = Integer.parseInt(scanner.nextLine());
+                            System.err.println("---------------------------------------------------");
+                            Giay giay = null;
+                            switch (loai) {
+                                case 1:
+                                    giay = new Giay_da_bong("", "", 0, "", 0, 0);
+                                    if (giay != null) {
+                                        dsg.themGiay(giay, "Football.txt");
+                                    }
                                     break;
-                                    case 3:
+                                case 2:
+                                    giay = new Giay_cau_long("", "", 0, 0, 0, 0);
+                                    if (giay != null) {
+                                        dsg.themGiay(giay, "Badminton.txt");
+                                    }
+                                    break;
+                                case 3:
                                     giay = new Giay_chay_bo("", "", 0, 0, 0, 0);
-                                    if (giay != null){
+                                    if (giay != null) {
                                         dsg.themGiay(giay, "Running.txt");
                                     }
                                     break;
-                                    case 4:
+                                case 4:
                                     break;
-                                }
-                            case 2:
-                                System.err.println("-----------------------------------------------");
-                                System.err.println("Nhap loai giay can sua: ");
-                                System.err.println("1. Giay da bong");
-                                System.err.println("2. Giay cau long");
-                                System.err.println("3. Giay chay bo");
-                                System.err.println("4. Quay lai");
-                                System.err.println("-----------------------------------------------");
-                                System.err.print("Nhap lua chon cua ban: ");
-                                int choice2 = Integer.parseInt(scanner.nextLine());
-                                System.err.println("-----------------------------------------------");
-                                switch (choice2){
-                                    case 1:
-                                        System.err.println("Nhap ma giay can sua: ");
-                                        String maSua = scanner.nextLine();
-                                        try {
-                                            dsg.suaGiay(maSua, scanner, new FileWriter("Football.txt"));
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                        break;
-                                    case 2:
-                                        System.err.println("Nhap ma giay can sua: ");
-                                        String maSua1 = scanner.nextLine();
-                                        try {
-                                            dsg.suaGiay(maSua1, scanner, new FileWriter("Badminton.txt"));
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                        break;
-                                    case 3:
-                                        System.err.println("Nhap ma giay can sua: ");
-                                        String maSua2 = scanner.nextLine();
-                                        try {
-                                            dsg.suaGiay(maSua2, scanner, new FileWriter("Running.txt"));
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                        break;
-                                    case 4:
-                                        break;
-                                }
-                                break;
-                            case 3:
-                                System.err.println("Nhap ma giay can xoa: ");
-                                String maXoa = scanner.nextLine();
-                                dsg.xoaGiay(maXoa);
-                                break;
-                            case 4:
-                                System.err.println("Nhap ma giay can tim: ");
-                                String maTim = scanner.nextLine();
-                                dsg.timKiem(maTim);
-                                break;
-                            case 5:
-                                dsg.hienThi();
-                                break;
-                            case 6:
-                                dsg.tongSoLuong();
-                                break;
-                            case 7:
-                                break;
-                        }
-                        
-                 break;        
-                 case 2:
-                        System.err.println("---------------------------------------------------");
-                        System.err.println("1. Them user");
-                        System.err.println("2. Sua user theo ma");
-                        System.err.println("3. Xoa user theo ma");
-                        System.err.println("4. Tim kiem theo ma");
-                        System.err.println("5. Hien thi danh sach user");
-                        System.err.println("6. Xem tong so luong user");
-                        System.err.println("7. Quay lai");
-                        System.err.println("---------------------------------------------------");
-                        System.err.print("Nhap lua chon cua ban: ");
-                        int choice2 = Integer.parseInt(scanner.nextLine());
-                        System.err.println("---------------------------------------------------");
-                        switch (choice2){
-                            case 1:
-                                User user = new User( "", "", "", "");
-                                dsu.themUser(user, "User.txt");
-                                break;
-                            case 2:
-                                System.err.println("Nhap ma user can sua: ");
-                                String maSua = scanner.nextLine();
-                                try {
-                                    dsu.suaUser(maSua, scanner, new FileWriter("User.txt"));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case 3:
-                                System.err.println("Nhap ma user can xoa: ");
-                                String maXoa = scanner.nextLine();
-                                dsu.xoaUser(maXoa);
-                                break;
-                            case 4:
-                                System.err.println("Nhap ma user can tim: ");
-                                String maTim = scanner.nextLine();
-                                dsu.timKiem(maTim);
-                                break;
-                            case 5:
-                                dsu.hienThi();
-                                break;
-                            case 6:
-                                dsu.tongSoLuong();
-                                break;
-                            case 7:
-                                break;
-                        }
-                        break;
+                            }
+                            break;
+                        case 2:
+                            System.err.println("-----------------------------------------------");
+                            System.err.println("Nhap loai giay can sua: ");
+                            System.err.println("1. Giay da bong");
+                            System.err.println("2. Giay cau long");
+                            System.err.println("3. Giay chay bo");
+                            System.err.println("4. Quay lai");
+                            System.err.println("-----------------------------------------------");
+                            System.err.print("Nhap lua chon cua ban: ");
+                            int choice2 = Integer.parseInt(scanner.nextLine());
+                            System.err.println("-----------------------------------------------");
+                            switch (choice2) {
+                                case 1:
+                                    System.err.println("Nhap ma giay can sua: ");
+                                    String maSua = scanner.nextLine();
+                                    try {
+                                        dsg.suaGiay(maSua, scanner, new FileWriter("Football.txt"));
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 2:
+                                    System.err.println("Nhap ma giay can sua: ");
+                                    String maSua1 = scanner.nextLine();
+                                    try {
+                                        dsg.suaGiay(maSua1, scanner, new FileWriter("Badminton.txt"));
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 3:
+                                    System.err.println("Nhap ma giay can sua: ");
+                                    String maSua2 = scanner.nextLine();
+                                    try {
+                                        dsg.suaGiay(maSua2, scanner, new FileWriter("Running.txt"));
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 4:
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            System.err.print("Nhap ma giay can xoa: ");
+                            String maXoa = scanner.nextLine();
+                            dsg.xoaGiay(maXoa);
+                            break;
+                        case 4:
+                            System.err.print("Nhap ma giay can tim: ");
+                            String maTim = scanner.nextLine();
+                            dsg.timKiem(maTim);
+                            break;
+                        case 5:
+                            dsg.hienThi();
+                            break;
+                        case 6:
+                            dsg.tongSoLuong();
+                            break;
+                        case 7:
+                            flag = true;
+                            break;
+                    }
+                }
+                    break;
+                case 2:
+                    boolean flag1 = false;
+                    while (!flag1){
+                    System.err.println("---------------------------------------------------");
+                    System.err.println("1. Them user");
+                    System.err.println("2. Sua user theo ma");
+                    System.err.println("3. Xoa user theo ma");
+                    System.err.println("4. Tim kiem theo ma");
+                    System.err.println("5. Hien thi danh sach user");
+                    System.err.println("6. Xem tong so luong user");
+                    System.err.println("7. Quay lai");
+                    System.err.println("---------------------------------------------------");
+                    System.err.print("Nhap lua chon cua ban: ");
+                    int choice3 = Integer.parseInt(scanner.nextLine());
+                    System.err.println("---------------------------------------------------");
+                    switch (choice3) {
+                        case 1:
+                            User user = new User("", "", "", "");
+                            dsu.themUser(user, "User.txt");
+                            break;
+                        case 2:
+                            System.err.print("Nhap ma user can sua: ");
+                            String maSua = scanner.nextLine();
+                            try {
+                                dsu.suaUser(maSua, scanner, new FileWriter("User.txt"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 3:
+                            System.err.print("Nhap ma user can xoa: ");
+                            String maXoa = scanner.nextLine();
+                            dsu.xoaUser(maXoa);
+                            break;
+                        case 4:
+                            System.err.print("Nhap ma user can tim: ");
+                            String maTim = scanner.nextLine();
+                            dsu.timKiem(maTim);
+                            break;
+                        case 5:
+                            dsu.hienThi();
+                            break;
+                        case 6:
+                            dsu.tongSoLuong();
+                            break;
+                        case 7:
+                            flag1 = true;
+                            break;
+                    }
+                    }
+                    break;
                 case 3:
-                        System.err.println("---------------------------------------------------");
-                        System.err.println("1. Them hoa don");
-                        System.err.println("2. Sua hoa don theo ma");
-                        System.err.println("3. Xoa hoa don theo ma");
-                        System.err.println("4. Tim kiem theo ma");
-                        System.err.println("5. Hien thi danh sach hoa don");
-                        System.err.println("6. Xem tong so luong hoa don");
-                        System.err.println("7. Quay lai");
-                        System.err.println("---------------------------------------------------");
-                        System.err.print("Nhap lua chon cua ban: ");
-                        int choice3 = Integer.parseInt(scanner.nextLine());
-                        System.err.println("---------------------------------------------------");
-                        switch (choice3){
-                            case 1:
-                                HoaDon hoaDon = new HoaDon("", new User("", "", "", ""), new ArrayList<>(), 0, "");
-                                dshd.themHoaDon(hoaDon, "Bill.txt");
-                                break;
-                            case 2:
-                                System.err.println("Nhap ma hoa don can sua: ");
-                                String maSua = scanner.nextLine();
-                                try {
-                                    dshd.suaHoaDon(maSua, scanner, new FileWriter("Bill.txt"));
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case 3:
-                                System.err.println("Nhap ma hoa don can xoa: ");
-                                String maXoa = scanner.nextLine();
-                                dshd.xoaHoaDon(maXoa);
-                                break;
-                            case 4:
-                                System.err.println("Nhap ma hoa don can tim: ");
-                                String maTim = scanner.nextLine();
-                                dshd.timKiem(maTim);
-                                break;
-                            case 5:
-                                dshd.hienThi();
-                                break;
-                            case 6:
-                                dshd.tongSoLuong();
-                                break;
-                            case 7:
-                                break;
-                        }
+                    boolean flag2 = false;
+                    while(!flag2){
+                    System.err.println("---------------------------------------------------");
+                    System.err.println("1. Them hoa don");
+                    System.err.println("2. Sua hoa don theo ma");
+                    System.err.println("3. Xoa hoa don theo ma");
+                    System.err.println("4. Tim kiem theo ma");
+                    System.err.println("5. Hien thi danh sach hoa don");
+                    System.err.println("6. Xem tong so luong hoa don");
+                    System.err.println("7. Quay lai");
+                    System.err.println("---------------------------------------------------");
+                    System.err.print("Nhap lua chon cua ban: ");
+                    int choice4 = Integer.parseInt(scanner.nextLine());
+                    System.err.println("---------------------------------------------------");
+                    switch (choice4) {
+                        case 1:
+                            HoaDon hoaDon = new HoaDon("", new User("", "", "", ""), new ArrayList<>(), 0, "");
+                            dshd.themHoaDon(hoaDon, "Bill.txt");
+                            break;
+                        case 2:
+                            System.err.print("Nhap ma hoa don can sua: ");
+                            String maSua = scanner.nextLine();
+                            try {
+                                dshd.suaHoaDon(maSua, scanner, new FileWriter("Bill.txt"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 3:
+                            System.err.print("Nhap ma hoa don can xoa: ");
+                            String maXoa = scanner.nextLine();
+                            dshd.xoaHoaDon(maXoa);
+                            break;
+                        case 4:
+                            System.err.print("Nhap ma hoa don can tim: ");
+                            String maTim = scanner.nextLine();
+                            dshd.timKiem(maTim);
+                            break;
+                        case 5:
+                            dshd.hienThi();
+                            break;
+                        case 6:
+                            dshd.tongSoLuong();
+                            break;
+                        case 7:
+                            flag2 = true;
+                            break;
+                    }
+                    }
+                    break;
+                case 4:
+                    System.exit(0);
+                    break;
+                default:
+                    System.err.println("Lua chon khong hop le. Vui long nhap lai.");
+                    break;
             }
         }
     }
