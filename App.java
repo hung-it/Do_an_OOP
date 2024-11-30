@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import javax.swing.text.GapContent;
 
 // Interface
 interface GiayInterface {
@@ -378,20 +377,29 @@ class DSG {
 
     // Hiển thị danh sách giày
     public void hienThi (){
-        String fileName = "";
-        for (Giay giay : list){
-            if (giay instanceof Giay_da_bong){
-                fileName = "Football.txt";
-            } else if (giay instanceof Giay_cau_long){
-                fileName = "Badminton.txt";
-            } else if (giay instanceof Giay_chay_bo){
-                fileName = "Running.txt";
-            }
-        }
-
-        if (!fileName.isEmpty()){
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(fileName));
+                System.out.println("Danh sach giay da bong: ");
+                BufferedReader reader = new BufferedReader(new FileReader("Football.txt"));
+                String currentLine;
+                while ((currentLine = reader.readLine()) != null){
+                    System.out.println(currentLine);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                System.out.println("Danh sach giay cau long: ");
+                BufferedReader reader = new BufferedReader(new FileReader("Badminton.txt"));
+                String currentLine;
+                while ((currentLine = reader.readLine()) != null){
+                    System.out.println(currentLine);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                System.out.println("Danh sach giay chay bo: ");
+                BufferedReader reader = new BufferedReader(new FileReader("Running.txt"));
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null){
                     System.out.println(currentLine);
@@ -400,7 +408,7 @@ class DSG {
                 e.printStackTrace();
             }
         }
-    }
+    
 
     // Sửa thông tin giày
     public void suaGiay(String maGiay, Scanner scanner,  FileWriter fw){
@@ -408,27 +416,27 @@ class DSG {
             if (giay.getMaGiay().equals(maGiay)) {
                 if (giay instanceof Giay_da_bong) {
                     giay.nhap(fw);
-                    System.err.println("Nhap loai de: ");
+                    System.err.print("Nhap loai de: ");
                     ((Giay_da_bong) giay).setLoaiDe(scanner.nextLine());
-                    System.err.println("Nhap so luong: ");
+                    System.err.print("Nhap so luong: ");
                     ((Giay_da_bong) giay).setSoLuong(scanner.nextInt());
-                    System.err.println("Nhap gia ban: ");
+                    System.err.print("Nhap gia ban: ");
                     ((Giay_da_bong) giay).setGiaBan(scanner.nextInt());
                 } else if (giay instanceof Giay_cau_long) {
                     giay.nhap(fw);
-                    System.err.println("Nhap do bam: ");
+                    System.err.print("Nhap do bam: ");
                     ((Giay_cau_long) giay).setDoBam(scanner.nextInt());
-                    System.err.println("Nhap so luong: ");
+                    System.err.print("Nhap so luong: ");
                     ((Giay_cau_long) giay).setSoLuong(scanner.nextInt());
-                    System.err.println("Nhap gia ban: ");
+                    System.err.print("Nhap gia ban: ");
                     ((Giay_cau_long) giay).setGiaBan(scanner.nextInt());
                 } else if (giay instanceof Giay_chay_bo) {
                     giay.nhap(fw);
-                    System.err.println("Nhap do em: ");
+                    System.err.print("Nhap do em: ");
                     ((Giay_chay_bo) giay).setDoEm(scanner.nextInt());
-                    System.err.println("Nhap so luong: ");
+                    System.err.print("Nhap so luong: ");
                     ((Giay_chay_bo) giay).setSoLuong(scanner.nextInt());
-                    System.err.println("Nhap gia ban: ");
+                    System.err.print("Nhap gia ban: ");
                     ((Giay_chay_bo) giay).setGiaBan(scanner.nextInt());
                 }
                 return;
@@ -1050,7 +1058,7 @@ public class App {
                             System.err.println("-----------------------------------------------");
                             switch (choice2) {
                                 case 1:
-                                    System.err.println("Nhap ma giay can sua: ");
+                                    System.err.print("Nhap ma giay can sua: ");
                                     String maSua = scanner.nextLine();
                                     try {
                                         dsg.suaGiay(maSua, scanner, new FileWriter("Football.txt"));
@@ -1059,7 +1067,7 @@ public class App {
                                     }
                                     break;
                                 case 2:
-                                    System.err.println("Nhap ma giay can sua: ");
+                                    System.err.print("Nhap ma giay can sua: ");
                                     String maSua1 = scanner.nextLine();
                                     try {
                                         dsg.suaGiay(maSua1, scanner, new FileWriter("Badminton.txt"));
@@ -1068,7 +1076,7 @@ public class App {
                                     }
                                     break;
                                 case 3:
-                                    System.err.println("Nhap ma giay can sua: ");
+                                    System.err.print("Nhap ma giay can sua: ");
                                     String maSua2 = scanner.nextLine();
                                     try {
                                         dsg.suaGiay(maSua2, scanner, new FileWriter("Running.txt"));
