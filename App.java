@@ -398,7 +398,6 @@ class DSG {
                 e.printStackTrace();
             }
             try {
-                System.out.println("Danh sach giay chay bo: ");
                 BufferedReader reader = new BufferedReader(new FileReader("Running.txt"));
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null){
@@ -411,39 +410,32 @@ class DSG {
     
 
     // Sửa thông tin giày
-    public void suaGiay(String maGiay, Scanner scanner,  FileWriter fw){
+    public void suaGiay(String maGiay, Scanner scanner, String fileName) {
+        boolean found = false;
         for (Giay giay : list) {
             if (giay.getMaGiay().equals(maGiay)) {
-                if (giay instanceof Giay_da_bong) {
-                    giay.nhap(fw);
-                    System.err.print("Nhap loai de: ");
-                    ((Giay_da_bong) giay).setLoaiDe(scanner.nextLine());
-                    System.err.print("Nhap so luong: ");
-                    ((Giay_da_bong) giay).setSoLuong(scanner.nextInt());
-                    System.err.print("Nhap gia ban: ");
-                    ((Giay_da_bong) giay).setGiaBan(scanner.nextInt());
-                } else if (giay instanceof Giay_cau_long) {
-                    giay.nhap(fw);
-                    System.err.print("Nhap do bam: ");
-                    ((Giay_cau_long) giay).setDoBam(scanner.nextInt());
-                    System.err.print("Nhap so luong: ");
-                    ((Giay_cau_long) giay).setSoLuong(scanner.nextInt());
-                    System.err.print("Nhap gia ban: ");
-                    ((Giay_cau_long) giay).setGiaBan(scanner.nextInt());
-                } else if (giay instanceof Giay_chay_bo) {
-                    giay.nhap(fw);
-                    System.err.print("Nhap do em: ");
-                    ((Giay_chay_bo) giay).setDoEm(scanner.nextInt());
-                    System.err.print("Nhap so luong: ");
-                    ((Giay_chay_bo) giay).setSoLuong(scanner.nextInt());
-                    System.err.print("Nhap gia ban: ");
-                    ((Giay_chay_bo) giay).setGiaBan(scanner.nextInt());
+                found = true;
+    
+                System.out.println("Nhap thong tin moi cho giay (ma giay se khong thay doi):");
+                try {
+                   
+                    FileWriter fw = new FileWriter(fileName, false); 
+                    for (Giay g : list) {
+                        g.nhap(fw); 
+                    }
+                    fw.close();
+                } catch (Exception e) {
+                    System.err.println("Loi khi ghi vao file: " + e.getMessage());
                 }
-                return;
+                break;
             }
         }
-        System.out.println("Khong tim thay giay voi ma: " + maGiay);
+        if (!found) {
+            System.out.println("Khong tim thay giay voi ma: " + maGiay);
+        }
     }
+    
+    
 
     // Xóa giày theo mã
     public void xoaGiay (String maGiay){
@@ -679,14 +671,27 @@ class DSU{
         }
     }
     // Sửa thông tin user
-    public void suaUser(String maUser, Scanner scanner, FileWriter fw){
+    public void suaUser(String maUser, Scanner scanner){
+        boolean found = false;
         for (User user : list){
             if (user.getMaUser().equals(maUser)){
-                user.nhapThongTin(fw);
-                return;
+                found = true;
+                System.out.println("Nhap thong tin moi cho user (ma user se khong thay doi):");
+                try {
+                    FileWriter fw = new FileWriter("User.txt", false);
+                    for (User u : list){
+                        u.nhapThongTin(fw);
+                    }
+                    fw.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         }
-        System.out.println("Khong tim thay user voi ma: " + maUser);
+        if (!found){
+            System.out.println("Khong tim thay user voi ma: " + maUser);
+        }
     }
 
     // Xóa user theo mã
@@ -756,7 +761,7 @@ class HoaDon implements HoaDonInterface{
     private String maHoaDon;
     User user;
     List<Giay> dsGiay;
-    private double tongTien;
+    private int tongTien;
     private String ngayMua;
     private static int soLuongHoaDon = 0;
 
@@ -770,7 +775,7 @@ class HoaDon implements HoaDonInterface{
         soLuongHoaDon++;
     }
 
-    public HoaDon(String maHoaDon, User user, List<Giay> dsGiay, double tongTien, String ngayMua) {
+    public HoaDon(String maHoaDon, User user, List<Giay> dsGiay, int tongTien, String ngayMua) {
         this.maHoaDon = maHoaDon;
         this.user = user;
         this.dsGiay = dsGiay;
@@ -808,7 +813,7 @@ class HoaDon implements HoaDonInterface{
         return tongTien;
     }
 
-    public void setTongTien(double tongTien) {
+    public void setTongTien(int tongTien) {
         this.tongTien = tongTien;
     }
 
@@ -834,7 +839,7 @@ class HoaDon implements HoaDonInterface{
             fw.write(maHoaDon + ",");
             user.nhapThongTin(fw);
             System.out.print("Nhap tong tien: ");
-            tongTien = scanner.nextDouble();
+            tongTien = scanner.nextInt();
             fw.write(tongTien + ",");
             scanner.nextLine();
             System.out.print("Nhap ngay mua: ");
@@ -855,7 +860,7 @@ class HoaDon implements HoaDonInterface{
             user.setTenUser(arr[2]);
             user.setDiaChi(arr[3]);
             user.setSdt(arr[4]);
-            tongTien = Double.parseDouble(arr[5]);
+            tongTien = Integer.parseInt(arr[5]);
             ngayMua = arr[6];
             System.out.println("Ma hoa don: " + maHoaDon);
             System.out.println("Ten user: " + user.getTenUser());
@@ -907,15 +912,26 @@ class DSHD{
     }
 
     // Sửa thông tin hoá đơn
-    public void suaHoaDon(String maHoaDon, Scanner scanner, FileWriter fw){
+    public void suaHoaDon(String maHoaDon, Scanner scanner){
+        boolean found = false;
         for (HoaDon hoaDon : list){
             if (hoaDon.getMaHoaDon().equals(maHoaDon)){
-                hoaDon.nhapThongTin(fw);
-                return;
+                found = true;
+                System.out.println("Nhap thong tin moi cho hoa don (ma hoa don se khong thay doi):");
+                try{
+                    FileWriter fw = new FileWriter("Bill.txt",false);
+                    for (HoaDon hd : list){
+                        hd.nhapThongTin(fw);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }
+        if (!found){
         System.out.println("Khong tim thay hoa don voi ma: " + maHoaDon);
     }
+}
 
     // Xóa hoá đơn theo mã
     public void xoaHoaDon(String maHoaDon){
@@ -1061,7 +1077,7 @@ public class App {
                                     System.err.print("Nhap ma giay can sua: ");
                                     String maSua = scanner.nextLine();
                                     try {
-                                        dsg.suaGiay(maSua, scanner, new FileWriter("Football.txt"));
+                                        dsg.suaGiay(maSua, scanner,"Football.txt");
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -1070,7 +1086,7 @@ public class App {
                                     System.err.print("Nhap ma giay can sua: ");
                                     String maSua1 = scanner.nextLine();
                                     try {
-                                        dsg.suaGiay(maSua1, scanner, new FileWriter("Badminton.txt"));
+                                        dsg.suaGiay(maSua1, scanner, "Badminton.txt");
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -1079,7 +1095,7 @@ public class App {
                                     System.err.print("Nhap ma giay can sua: ");
                                     String maSua2 = scanner.nextLine();
                                     try {
-                                        dsg.suaGiay(maSua2, scanner, new FileWriter("Running.txt"));
+                                        dsg.suaGiay(maSua2, scanner, "Running.txt");
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -1134,7 +1150,7 @@ public class App {
                             System.err.print("Nhap ma user can sua: ");
                             String maSua = scanner.nextLine();
                             try {
-                                dsu.suaUser(maSua, scanner, new FileWriter("User.txt"));
+                                dsu.suaUser(maSua, scanner);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -1185,7 +1201,7 @@ public class App {
                             System.err.print("Nhap ma hoa don can sua: ");
                             String maSua = scanner.nextLine();
                             try {
-                                dshd.suaHoaDon(maSua, scanner, new FileWriter("Bill.txt"));
+                                dshd.suaHoaDon(maSua, scanner);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
