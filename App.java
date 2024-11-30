@@ -439,7 +439,7 @@ class DSG {
 
     // Xóa giày theo mã
     public void xoaGiay (String maGiay){
-
+        Giay.soLuongGiay--;
         // Xoá trong file
         String fileName ="";
         for (Giay giay : list){
