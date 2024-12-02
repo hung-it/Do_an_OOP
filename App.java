@@ -841,7 +841,7 @@ class HoaDon implements HoaDonInterface{
         this.dsGiay = dsGiay;
     }
 
-    public double getTongTien() {
+    public int getTongTien() {
         return tongTien;
     }
 
@@ -868,11 +868,11 @@ class HoaDon implements HoaDonInterface{
         try {
             System.out.print("Nhap ma hoa don: ");
             maHoaDon = scanner.nextLine();
-            fw.write(maHoaDon + ",");
+            fw.write(maHoaDon + ", ");
             user.nhapThongTin(fw);
             System.out.print("Nhap tong tien: ");
             tongTien = scanner.nextInt();
-            fw.write(tongTien + ",");
+            fw.write(tongTien + ", ");
             scanner.nextLine();
             System.out.print("Nhap ngay mua: ");
             ngayMua = scanner.nextLine();
@@ -886,7 +886,7 @@ class HoaDon implements HoaDonInterface{
     public void xuatThongTin(BufferedReader br){
         try {
             String line = br.readLine();
-            String[] arr = line.split(",");
+            String[] arr = line.split(", ");
             maHoaDon = arr[0];
             user.setMaUser(arr[1]);
             user.setTenUser(arr[2]);
