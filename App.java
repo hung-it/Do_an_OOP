@@ -98,6 +98,10 @@ abstract class Giay implements GiayInterface {
             e.printStackTrace();
         }
     }
+
+    public static void giamSoLuongGiay() {
+        soLuongGiay--;
+    }
 }
 
 // Lớp con
@@ -138,7 +142,7 @@ class Giay_da_bong extends Giay {
         this.soLuong = soLuong;
     }
 
-    public double getGiaBan() {
+    public int getGiaBan() {
         return giaBan;
     }
 
@@ -398,6 +402,7 @@ class DSG {
                 e.printStackTrace();
             }
             try {
+                System.out.println("Danh sach giay chay bo: ");
                 BufferedReader reader = new BufferedReader(new FileReader("Running.txt"));
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null){
@@ -415,97 +420,115 @@ class DSG {
         for (Giay giay : list) {
             if (giay.getMaGiay().equals(maGiay)) {
                 found = true;
-    
                 System.out.println("Nhap thong tin moi cho giay (ma giay se khong thay doi):");
-                try {
-                   
-                    FileWriter fw = new FileWriter(fileName, false); 
-                    for (Giay g : list) {
-                        g.nhap(fw); 
-                    }
-                    fw.close();
-                } catch (Exception e) {
-                    System.err.println("Loi khi ghi vao file: " + e.getMessage());
+                System.out.print("Nhap ten giay moi: ");
+                giay.setTenGiay(scanner.nextLine());
+                System.out.print("Nhap size moi: ");
+                giay.setSize(Integer.parseInt(scanner.nextLine()));
+                if (giay instanceof Giay_da_bong) {
+                    Giay_da_bong giayDaBong = (Giay_da_bong) giay;
+                    System.out.print("Nhap loai de moi: ");
+                    giayDaBong.setLoaiDe(scanner.nextLine());
+                    System.out.print("Nhap so luong moi: ");
+                    giayDaBong.setSoLuong(Integer.parseInt(scanner.nextLine()));
+                    System.out.print("Nhap gia ban moi: ");
+                    giayDaBong.setGiaBan(Integer.parseInt(scanner.nextLine()));
+                } else if (giay instanceof Giay_cau_long) {
+                    Giay_cau_long giayCauLong = (Giay_cau_long) giay;
+                    System.out.print("Nhap do bam moi: ");
+                    giayCauLong.setDoBam(Integer.parseInt(scanner.nextLine()));
+                    System.out.print("Nhap so luong moi: ");
+                    giayCauLong.setSoLuong(Integer.parseInt(scanner.nextLine()));
+                    System.out.print("Nhap gia ban moi: ");
+                    giayCauLong.setGiaBan(Integer.parseInt(scanner.nextLine()));
+                } else if (giay instanceof Giay_chay_bo) {
+                    Giay_chay_bo giayChayBo = (Giay_chay_bo) giay;
+                    System.out.print("Nhap do em moi: ");
+                    giayChayBo.setDoEm(Integer.parseInt(scanner.nextLine()));
+                    System.out.print("Nhap so luong moi: ");
+                    giayChayBo.setSoLuong(Integer.parseInt(scanner.nextLine()));
+                    System.out.print("Nhap gia ban moi: ");
+                    giayChayBo.setGiaBan(Integer.parseInt(scanner.nextLine()));
                 }
-                break;
+    
+                break; 
             }
         }
-        if (!found) {
+    
+        if (found) {
+            try {
+                List<String> lines = new ArrayList<>();
+                for (Giay g : list) {
+                        String line = g.getMaGiay() + ", " + g.getTenGiay() + ", " + g.getSize();
+                        if (fileName == "Football.txt") {
+                            Giay_da_bong giayDaBong = (Giay_da_bong) g;
+                            line += ", " + giayDaBong.getLoaiDe() + ", " + giayDaBong.getSoLuong() + ", " + giayDaBong.getGiaBan();
+                        } else if (fileName == "Badminton.txt") {
+                            Giay_cau_long giayCauLong = (Giay_cau_long) g;
+                            line += ", " + giayCauLong.getDoBam() + ", " + giayCauLong.getSoLuong() + ", " + giayCauLong.getGiaBan();
+                        } else if (fileName == "Running.txt") {
+                            Giay_chay_bo giayChayBo = (Giay_chay_bo) g;
+                            line += ", " + giayChayBo.getDoEm() + ", " + giayChayBo.getSoLuong() + ", " + giayChayBo.getGiaBan();
+                        }
+                        lines.add(line);
+                }
+    
+                BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, false));
+                for (String line : lines) {
+                    writer.write(line);
+                    writer.newLine();
+                }
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (!found) {
             System.out.println("Khong tim thay giay voi ma: " + maGiay);
         }
     }
     
     
+    
 
     // Xóa giày theo mã
-    public void xoaGiay (String maGiay){
-
-        // Xoá trong file
-        String fileName ="";
-        for (Giay giay : list){
-            if(giay.getMaGiay().equals(maGiay)){
-                if (giay instanceof Giay_da_bong){
-                    fileName = "Football.txt";
-                } else if (giay instanceof Giay_cau_long){
-                    fileName = "Badminton.txt";
-                } else if (giay instanceof Giay_chay_bo){
-                    fileName = "Running.txt";
-                }
-            }
-        }
-        if (!fileName.isEmpty()){
-            // Đọc và ghi các dòng không chứa mã giày cần xoá
-            List<String> lines = new ArrayList<>();
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(fileName));
-                String currentline;
-                while ((currentline = reader.readLine()) != null){
-                    String [] part = currentline.split(",");
-                    if (!part[0].equals(maGiay)){
-                        lines.add(currentline);
-                    }
-                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            // Ghi lại vào file 
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-                for (String line:lines){
-                    writer.write(line);
-                    writer.newLine();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        list.removeIf(giay -> giay.getMaGiay().equals(maGiay));
+    public void xoaGiay(String maGiay, String fileName) {
     
-}
+        List<String> lines = new ArrayList<>();
+        Giay.giamSoLuongGiay();
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String currentline;
+            while ((currentline = reader.readLine()) != null) {
+                String[] part = currentline.split(", ");
+                if (!part[0].trim().equals(maGiay)) {
+                    lines.add(currentline);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (String line : lines) {
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        list.removeIf(giay -> giay.getMaGiay().equals(maGiay));
+    }
+    
 
     // Tìm kiếm giày theo mã
-    public void timKiem(String maGiay){
-        String fileName = "";
-        for (Giay giay : list){
-            if (giay.getMaGiay().equals(maGiay)){
-                if (giay instanceof Giay_da_bong){
-                    fileName = "Football.txt";
-                } else if (giay instanceof Giay_cau_long){
-                    fileName = "Badminton.txt";
-                } else if (giay instanceof Giay_chay_bo){
-                    fileName = "Running.txt";
-                }
-            }
-        }
-        if (!fileName.isEmpty()){
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    public void timKiem(String maGiay, String fileName){
+
+            try(BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+                
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null){
-                String [] part = currentLine.split(",");
-                if (part[0].equals(maGiay)){
+                String [] part = currentLine.split(", ");
+                if (part[0].trim().equals(maGiay)){
                     System.out.println("Giay can tim la: " + currentLine);
                     return;
                 }
@@ -514,7 +537,6 @@ class DSG {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
     }
 
     // Hiển thị tổng số lượng giày
@@ -598,13 +620,13 @@ class User implements UserInterface{
         try {
             System.out.print("Nhap ma user: ");
             maUser = scanner.nextLine();
-            fw.write(maUser + ",");
+            fw.write(maUser + ", ");
             System.out.print("Nhap ten user: ");
             tenUser = scanner.nextLine();
-            fw.write(tenUser + ",");
+            fw.write(tenUser + ", ");
             System.out.print("Nhap dia chi: ");
             diaChi = scanner.nextLine();
-            fw.write(diaChi + ",");
+            fw.write(diaChi + ", ");
             System.out.print("Nhap so dien thoai: ");
             sdt = scanner.nextLine();
             fw.write(sdt + "\n");
@@ -629,6 +651,10 @@ class User implements UserInterface{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void giamSoLuongUser(){
+        soLuongUser--;
     }
 }
 
@@ -677,16 +703,28 @@ class DSU{
             if (user.getMaUser().equals(maUser)){
                 found = true;
                 System.out.println("Nhap thong tin moi cho user (ma user se khong thay doi):");
+                System.out.print("Nhap ten user moi: ");
+                user.setTenUser(scanner.nextLine());
+                System.out.print("Nhap dia chi moi: ");
+                user.setDiaChi(scanner.nextLine());
+                System.out.print("Nhap so dien thoai moi: ");
+                user.setSdt(scanner.nextLine());
                 try {
-                    FileWriter fw = new FileWriter("User.txt", false);
+                    List<String> lines = new ArrayList<>();
                     for (User u : list){
-                        u.nhapThongTin(fw);
+                        String line = u.getMaUser() + ", " + u.getTenUser() + ", " + u.getDiaChi() + ", " + u.getSdt();
+                        lines.add(line);
                     }
-                    fw.close();
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("User.txt", false));
+                    for (String line : lines){
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                    writer.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+                break;
             }
         }
         if (!found){
@@ -697,35 +735,29 @@ class DSU{
     // Xóa user theo mã
     public void xoaUser(String maUser){
 
-        // Xoá trong file
         List<String> lines = new ArrayList<>();
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader("User.txt"));
+        User.giamSoLuongUser();
+        try (BufferedReader reader = new BufferedReader(new FileReader("User.txt"))){
             String currentLine;
-            while((currentLine = reader.readLine()) != null){
-                String [] part = currentLine.split(",");
-                if(!part[0].equals(maUser)){
+            while ((currentLine = reader.readLine()) != null){
+                String [] part = currentLine.split(", ");
+                if (!part[0].trim().equals(maUser)){
                     lines.add(currentLine);
                 }
             }
-            reader.close();
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
-        }
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("User.txt"));
-            for (String line : lines){
-                writer.write(line);
-                writer.newLine();
-            }
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        list.removeIf(user -> user.getMaUser().equals(maUser));
     }
-
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("User.txt"))){
+        for (String line : lines){
+            writer.write(line);
+            writer.newLine();
+        }
+    } catch (Exception e){
+        e.printStackTrace();
+    }
+    list.removeIf(user -> user.getMaUser().equals(maUser));
+}
     // Tìm kiếm user theo mã
     public void timKiem(String maUser){
         try {
@@ -872,6 +904,10 @@ class HoaDon implements HoaDonInterface{
             e.printStackTrace();
         }
     }
+
+    public static void giamSoLuongHoaDon(){
+        soLuongHoaDon--;
+    }
 }
 
 class DSHD{
@@ -918,12 +954,29 @@ class DSHD{
             if (hoaDon.getMaHoaDon().equals(maHoaDon)){
                 found = true;
                 System.out.println("Nhap thong tin moi cho hoa don (ma hoa don se khong thay doi):");
-                try{
-                    FileWriter fw = new FileWriter("Bill.txt",false);
+                System.out.print("Nhap ten user moi: ");
+                hoaDon.getUser().setTenUser(scanner.nextLine());
+                System.out.print("Nhap dia chi moi: ");
+                hoaDon.getUser().setDiaChi(scanner.nextLine());
+                System.out.print("Nhap so dien thoai moi: ");
+                hoaDon.getUser().setSdt(scanner.nextLine());
+                System.out.print("Nhap tong tien moi: ");
+                hoaDon.setTongTien(Integer.parseInt(scanner.nextLine()));
+                System.out.print("Nhap ngay mua moi: ");
+                hoaDon.setNgayMua(scanner.nextLine());
+                try {
+                    List<String> lines = new ArrayList<>();
                     for (HoaDon hd : list){
-                        hd.nhapThongTin(fw);
+                        String line = hd.getMaHoaDon() + ", " + hd.getUser().getMaUser() + ", " + hd.getUser().getTenUser() + ", " + hd.getUser().getDiaChi() + ", " + hd.getUser().getSdt() + ", " + hd.getTongTien() + ", " + hd.getNgayMua();
+                        lines.add(line);
                     }
-                }catch (Exception e){
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("Bill.txt", false));
+                    for (String line : lines){
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                    writer.close();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -936,33 +989,27 @@ class DSHD{
     // Xóa hoá đơn theo mã
     public void xoaHoaDon(String maHoaDon){
 
-        // Xoá trong file
         List<String> lines = new ArrayList<>();
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader("Bill.txt"));
+        HoaDon.giamSoLuongHoaDon();
+        try (BufferedReader reader = new BufferedReader(new FileReader("Bill.txt"))){
             String currentLine;
-            while((currentLine = reader.readLine()) != null){
-                String [] part = currentLine.split(",");
-                if(!part[0].equals(maHoaDon)){
+            while ((currentLine = reader.readLine()) != null){
+                String [] part = currentLine.split(", ");
+                if (!part[0].trim().equals(maHoaDon)){
                     lines.add(currentLine);
                 }
             }
-            reader.close();
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
-
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("Bill.txt"));
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Bill.txt"))){
             for (String line : lines){
                 writer.write(line);
                 writer.newLine();
             }
-            writer.close();
-        } catch (Exception e) {
+        } catch (Exception e){
             e.printStackTrace();
         }
-
         list.removeIf(hoaDon -> hoaDon.getMaHoaDon().equals(maHoaDon));
     }
 
@@ -1105,14 +1152,66 @@ public class App {
                             }
                             break;
                         case 3:
-                            System.err.print("Nhap ma giay can xoa: ");
-                            String maXoa = scanner.nextLine();
-                            dsg.xoaGiay(maXoa);
+                            System.err.println("-----------------------------------------------");
+                            System.err.println("Nhap loai giay can xoa: ");
+                            System.err.println("1. Giay da bong");
+                            System.err.println("2. Giay cau long");
+                            System.err.println("3. Giay chay bo");
+                            System.err.println("4. Quay lai");
+                            System.err.println("-----------------------------------------------");
+                            System.err.print("Nhap lua chon cua ban: ");
+                            int loai1 = Integer.parseInt(scanner.nextLine());
+                            System.err.println("-----------------------------------------------");
+                            switch (loai1) {
+                                case 1:
+                                    System.err.print("Nhap ma giay can xoa: ");
+                                    String maXoa = scanner.nextLine();
+                                    dsg.xoaGiay(maXoa, "Football.txt");
+                                    break;
+                                case 2:
+                                    System.err.print("Nhap ma giay can xoa: ");
+                                    String maXoa1 = scanner.nextLine();
+                                    dsg.xoaGiay(maXoa1, "Badminton.txt");
+                                    break;
+                                case 3:
+                                    System.err.print("Nhap ma giay can xoa: ");
+                                    String maXoa2 = scanner.nextLine();
+                                    dsg.xoaGiay(maXoa2, "Running.txt");
+                                    break;
+                                case 4:
+                                    break;
+                            }
                             break;
                         case 4:
-                            System.err.print("Nhap ma giay can tim: ");
-                            String maTim = scanner.nextLine();
-                            dsg.timKiem(maTim);
+                            System.err.println("-----------------------------------------------");
+                            System.err.println("Nhap loai giay can tim: ");
+                            System.err.println("1. Giay da bong");
+                            System.err.println("2. Giay cau long");
+                            System.err.println("3. Giay chay bo");
+                            System.err.println("4. Quay lai");
+                            System.err.println("-----------------------------------------------");
+                            System.err.print("Nhap lua chon cua ban: ");
+                            int loai2 = Integer.parseInt(scanner.nextLine());
+                            System.err.println("-----------------------------------------------");
+                            switch(loai2){
+                                case 1:
+                                    System.err.print("Nhap ma giay can tim: ");
+                                    String maTim = scanner.nextLine();
+                                    dsg.timKiem(maTim, "Football.txt");
+                                    break;
+                                case 2:
+                                    System.err.print("Nhap ma giay can tim: ");
+                                    String maTim1 = scanner.nextLine();
+                                    dsg.timKiem(maTim1, "Badminton.txt");
+                                    break;
+                                case 3:
+                                    System.err.print("Nhap ma giay can tim: ");
+                                    String maTim2 = scanner.nextLine();
+                                    dsg.timKiem(maTim2, "Running.txt");
+                                    break;
+                                case 4:
+                                    break;
+                            }
                             break;
                         case 5:
                             dsg.hienThi();
